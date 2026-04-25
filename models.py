@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
-from bson import ObjectId
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -31,8 +30,6 @@ class UserCreate(BaseModel):
 
 
 def _stringify_object_id(value: Any) -> str:
-    if isinstance(value, ObjectId):
-        return str(value)
     return str(value)
 
 
