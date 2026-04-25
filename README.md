@@ -35,7 +35,7 @@ Homenet is a real estate tokenization demo with:
 
 From the repo root:
 
-```bash
+```bash(language for powerShell)
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
