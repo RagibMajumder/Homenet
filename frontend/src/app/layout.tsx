@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 
-import { ThirdwebAppProvider } from "@/components/thirdweb-provider";
+import "@solana/wallet-adapter-react-ui/styles.css";
+
+import { SolanaProvider } from "@/components/solana-provider";
 import { Toaster } from "sonner";
 
 const inter = Inter({
@@ -31,7 +33,7 @@ export default function RootLayout({
       className={`${inter.variable} ${mono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <ThirdwebAppProvider>{children}</ThirdwebAppProvider>
+        <SolanaProvider>{children}</SolanaProvider>
         <Toaster richColors closeButton />
       </body>
     </html>

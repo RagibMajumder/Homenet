@@ -2,12 +2,15 @@
 
 import { useMemo, useState } from "react";
 import { ArrowUpRight, Building2, Percent, Tag } from "lucide-react";
-import { prepareContractCall } from "thirdweb";
-import { useActiveAccount, useSendTransaction } from "thirdweb/react";
+import { clusterApiUrl } from "@solana/web3.js";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
+import { walletAdapterIdentity } from "@metaplex-foundation/umi-signer-wallet-adapters";
+import { create } from "@metaplex-foundation/mpl-core";
+import { generateSigner } from "@metaplex-foundation/umi";
 import { toast } from "sonner";
 
 import type { Property } from "@/lib/types";
-import { erc1155Contract } from "@/lib/thirdweb";
 
 export function PropertyCard({
   property,
@@ -16,43 +19,49 @@ export function PropertyCard({
   property: Property;
   tokenId: bigint;
 }) {
-  const account = useActiveAccount();
-  const { mutateAsync: sendTx } = useSendTransaction();
+  const wallet = useWallet();
   const [isPending, setIsPending] = useState(false);
   const [lastTxHash, setLastTxHash] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const investDisabled = !account || isPending;
+  const investDisabled = !wallet.connected || !wallet.publicKey || isPending;
 
   const shortAddress = useMemo(() => {
-    const a = account?.address;
+    const a = wallet.publicKey?.toBase58();
     if (!a) return null;
     return `${a.slice(0, 6)}…${a.slice(-4)}`;
-  }, [account?.address]);
+  }, [wallet.publicKey]);
 
   async function onInvest() {
-    if (!account) return;
+    if (!wallet.connected || !wallet.publicKey) return;
     setError(null);
     setLastTxHash(null);
     setIsPending(true);
     try {
-      // mintTo(address to, uint256 tokenId, uint256 amount, bytes data)
-      const transaction = prepareContractCall({
-        contract: erc1155Contract,
-        method:
-          "function mintTo(address to, uint256 tokenId, uint256 amount, bytes data)",
-        params: [account.address, tokenId, 1n, "0x"],
+      // Metaplex Core: create a new asset on devnet named after the property address.
+      // Use the wallet adapter identity so the connected wallet signs as authority/payer.
+      const umi = createUmi(clusterApiUrl("devnet")).use(
+        walletAdapterIdentity(wallet),
+      );
+
+      const asset = generateSigner(umi);
+      const txBuilder = create(umi, {
+        asset,
+        name: property.address,
+        uri: "",
       });
 
-      const result = await sendTx(transaction);
-      setLastTxHash(result.transactionHash);
-      toast.success("Investment minted", {
-        description: `Tx: ${result.transactionHash.slice(0, 10)}…`,
+      const tx = await txBuilder.sendAndConfirm(umi);
+      const signature = tx.signature.toString();
+
+      setLastTxHash(signature);
+      toast.success("Asset minted (Solana Devnet)", {
+        description: `Tx: ${signature.slice(0, 10)}…`,
         action: {
           label: "View",
           onClick: () =>
             window.open(
-              `https://sepolia.basescan.org/tx/${result.transactionHash}`,
+              `https://explorer.solana.com/tx/${signature}?cluster=devnet`,
               "_blank",
               "noopener,noreferrer",
             ),
@@ -118,7 +127,7 @@ export function PropertyCard({
       </div>
 
       <div className="mt-3 text-xs text-white/60">
-        {account ? (
+        {wallet.connected && wallet.publicKey ? (
           <span>
             Mint to: <span className="text-white/80">{shortAddress}</span>
           </span>
@@ -132,11 +141,11 @@ export function PropertyCard({
           <span className="text-white/60">Tx:</span>{" "}
           <a
             className="text-white/80 underline underline-offset-4"
-            href={`https://sepolia.basescan.org/tx/${lastTxHash}`}
+            href={`https://explorer.solana.com/tx/${lastTxHash}?cluster=devnet`}
             target="_blank"
             rel="noreferrer"
           >
-            View on BaseScan
+            View on Solana Explorer
           </a>
         </div>
       ) : null}

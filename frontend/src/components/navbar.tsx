@@ -1,9 +1,7 @@
 "use client";
 
-import { ConnectButton } from "thirdweb/react";
-import { Home, Wallet } from "lucide-react";
-
-import { baseSepolia, client } from "@/lib/thirdweb";
+import { Home } from "lucide-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 export function Navbar() {
   return (
@@ -21,23 +19,9 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <div className="hidden text-xs text-white/60 sm:block">
-            Network: <span className="text-white/80">Base Sepolia</span>
+            Network: <span className="text-white/80">Solana Devnet</span>
           </div>
-          <ConnectButton
-            client={client}
-            chain={baseSepolia}
-            connectButton={{
-              label: "Connect Wallet",
-            }}
-            detailsButton={{
-              render: () => (
-                <span className="inline-flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-sm font-semibold text-black">
-                  <Wallet className="h-4 w-4" />
-                  Wallet
-                </span>
-              ),
-            }}
-          />
+          <WalletMultiButton />
         </div>
       </div>
     </header>
