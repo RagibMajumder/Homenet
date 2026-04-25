@@ -33,6 +33,16 @@
       "wallet_address": "1xayz",
       "kyc_verified": false,
       "_id": "5ad060a1cbcb4115260b441f"
+    },
+    {
+      "wallet_address": "marcosamaya",
+      "kyc_verified": false,
+      "_id": "17a49ee085e970165979365d"
+    },
+    {
+      "wallet_address": "what",
+      "kyc_verified": false,
+      "_id": "ba736165167f74c5d3d0ae9b"
     }
   ]
 }
