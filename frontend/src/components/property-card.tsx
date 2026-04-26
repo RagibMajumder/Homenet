@@ -19,18 +19,22 @@ export function PropertyCard({
   property: Property;
   tokenId: bigint;
 }) {
+  // Hooks must always run unconditionally and in the same order.
   const wallet = useWallet();
   const [isPending, setIsPending] = useState(false);
   const [lastTxHash, setLastTxHash] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  const investDisabled = !wallet.connected || !wallet.publicKey || isPending;
 
   const shortAddress = useMemo(() => {
     const a = wallet.publicKey?.toBase58();
     if (!a) return null;
     return `${a.slice(0, 6)}…${a.slice(-4)}`;
   }, [wallet.publicKey]);
+
+  // After hooks are initialized, it's safe to branch/return.
+  if (!property) return null;
+
+  const investDisabled = !wallet.connected || !wallet.publicKey || isPending;
 
   async function onInvest() {
     if (!wallet.connected || !wallet.publicKey) return;

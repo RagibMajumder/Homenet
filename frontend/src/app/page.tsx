@@ -1,6 +1,7 @@
 import { fetchProperties } from "@/lib/api";
 import { Navbar } from "@/components/navbar";
 import { PropertyCard } from "@/components/property-card";
+import { RwaTerminal } from "@/components/rwa-terminal";
 import type { Property } from "@/lib/types";
 
 export default async function Home() {
@@ -55,6 +56,8 @@ export default async function Home() {
             ))}
           </div>
         )}
+
+        <RwaTerminal />
       </main>
     </div>
   );
