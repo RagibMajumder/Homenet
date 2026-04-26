@@ -154,6 +154,21 @@ export function RwaTerminal() {
     return () => window.clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    function onLiquidation(evt: Event) {
+      const e = evt as CustomEvent<{ address?: string; time?: string }>;
+      const t = e.detail?.time ?? nowTime();
+      const address = e.detail?.address ?? "UNKNOWN_PROPERTY";
+      setLogs((prev) => [
+        ...prev,
+        `[${t}] 🔴 LIQUIDATION EXECUTED: ${address} position closed.`,
+      ]);
+    }
+
+    window.addEventListener("homenet:rwa-liquidation", onLiquidation);
+    return () => window.removeEventListener("homenet:rwa-liquidation", onLiquidation);
+  }, []);
+
   return (
     <div className="w-full max-w-2xl mt-8 rounded-lg overflow-hidden border border-gray-700 bg-black shadow-2xl">
       <div className="flex items-center justify-between gap-3 px-4 py-2 bg-gray-900 border-b border-gray-700">

@@ -50,7 +50,7 @@ export default async function Home() {
             </div>
           </div>
         ) : (
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid items-stretch grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {properties.map((p, idx) => (
               <PropertyCard key={p.id} property={p} tokenId={BigInt(idx)} />
             ))}
