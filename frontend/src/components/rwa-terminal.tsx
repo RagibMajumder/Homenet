@@ -48,7 +48,8 @@ export function RwaTerminal() {
 
   const rpcUrl = useMemo(
     () =>
-      "https://devnet.helius-rpc.com/?api-key=0526bfce-6df0-4c51-bc81-2e1a681a0223",
+      process.env.NEXT_PUBLIC_HELIUS_RPC_URL ??
+      "https://api.devnet.solana.com",
     [],
   );
 

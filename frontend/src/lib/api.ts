@@ -1,7 +1,7 @@
 import { Property } from "@/lib/types";
 
 const apiBaseUrl =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ??
+  process.env.NEXT_PUBLIC_PYTHON_BACKEND_URL?.replace(/\/$/, "") ??
   "http://localhost:8000";
 
 export async function fetchProperties(): Promise<Property[]> {

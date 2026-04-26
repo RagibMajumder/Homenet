@@ -37,7 +37,10 @@ export default async function Home() {
             <div className="mt-2 text-xs text-red-100/80">{error}</div>
             <div className="mt-3 text-xs text-red-100/80">
               Make sure FastAPI is running on{" "}
-              <span className="font-semibold">http://localhost:8000</span> and
+              <span className="font-semibold">
+                {process.env.NEXT_PUBLIC_PYTHON_BACKEND_URL ?? "http://localhost:8000"}
+              </span>{" "}
+              and
               CORS is enabled.
             </div>
           </div>

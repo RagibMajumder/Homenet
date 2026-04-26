@@ -7,7 +7,12 @@ import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-wallets";
 
 export function SolanaProvider({ children }: { children: React.ReactNode }) {
-  const endpoint = useMemo(() => "https://newest-floral-darkness.solana-devnet.quiknode.pro/00df8705d665b610f847bbe37e932c3f736f060f/", []);
+  const endpoint = useMemo(
+    () =>
+      process.env.NEXT_PUBLIC_HELIUS_RPC_URL ??
+      clusterApiUrl("devnet"),
+    [],
+  );
   const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
 
   return (
