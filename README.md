@@ -1,4 +1,4 @@
-# Homenet — Hackathon Demo (RWA Tokenization on Solana Devnet)
+# Homenet — (RWA Tokenization on Solana Devnet)
 
 Homenet is a demo real-estate tokenization dashboard:
 - **Backend (FastAPI / Python)** serves property data from a local JSON datastore.
