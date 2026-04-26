@@ -1,7 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Home } from "lucide-react";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+
+const WalletMultiButton = dynamic(
+  async () =>
+    (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton,
+  { ssr: false },
+);
 
 export function Navbar() {
   return (
@@ -21,7 +27,9 @@ export function Navbar() {
           <div className="hidden text-xs text-white/60 sm:block">
             Network: <span className="text-white/80">Solana Devnet</span>
           </div>
-          <WalletMultiButton />
+          <div className="min-h-[40px] min-w-[170px]">
+            <WalletMultiButton />
+          </div>
         </div>
       </div>
     </header>
