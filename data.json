@@ -1,7 +1,7 @@
 {
   "properties": [
     {
-      "_id": "35d1bf586deb6a0f8980fe76",
+      "_id": "5f4a394d54a94fa82841ede4",
       "address": "88 Pine Street, San Francisco, CA 94111",
       "price": 1250000.0,
       "total_tokens": 10000,
@@ -10,7 +10,7 @@
       "ipfs_image_cid": "bafybeigdyrzt3dummycidproperty01"
     },
     {
-      "_id": "2fb118422bd4f5aecd75be8e",
+      "_id": "8d5a8e54d91761c149edcc4b",
       "address": "2120 Ocean Ave, Santa Monica, CA 90405",
       "price": 1895000.0,
       "total_tokens": 15000,
@@ -19,7 +19,7 @@
       "ipfs_image_cid": "bafybeigdyrzt3dummycidproperty02"
     },
     {
-      "_id": "158661aaff2b1dbf7b4d685c",
+      "_id": "3f8dd360d60d26c28618e7c6",
       "address": "14 Bedford Row, New York, NY 10012",
       "price": 2450000.0,
       "total_tokens": 20000,
@@ -28,21 +28,5 @@
       "ipfs_image_cid": "bafybeigdyrzt3dummycidproperty03"
     }
   ],
-  "users": [
-    {
-      "wallet_address": "1xayz",
-      "kyc_verified": false,
-      "_id": "5ad060a1cbcb4115260b441f"
-    },
-    {
-      "wallet_address": "marcosamaya",
-      "kyc_verified": false,
-      "_id": "17a49ee085e970165979365d"
-    },
-    {
-      "wallet_address": "what",
-      "kyc_verified": false,
-      "_id": "ba736165167f74c5d3d0ae9b"
-    }
-  ]
+  "users": []
 }
